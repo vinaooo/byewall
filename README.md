@@ -9,6 +9,6 @@ This is an app to agregate Paywall Remover services.
 # Coming Soon Services
  - [removepaywall.com](https://www.removepaywall.com/)
 
-# New Services Request
+# New Services Request 
 
 Please create an issue [here](https://github.com/vinaooo/byewall/issues/new?assignees=&labels=&template=services-request.md&title=Service+request)

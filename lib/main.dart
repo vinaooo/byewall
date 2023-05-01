@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
                                     label = 'archive.is';
                                     break;
                                   case 2:
-                                    label = 'E outro';
+                                    label = 'E outro ';
                                     break;
                                 }
                                 return ChoiceChip(
