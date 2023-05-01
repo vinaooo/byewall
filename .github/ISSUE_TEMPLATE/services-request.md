@@ -9,3 +9,4 @@ assignees: ''
 
 Service name:
 Service URL:
+An URL with paywall to bypass with this service:
