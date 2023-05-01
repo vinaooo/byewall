@@ -177,7 +177,7 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 8),
