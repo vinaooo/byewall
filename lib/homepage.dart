@@ -10,7 +10,7 @@ import 'dart:async';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:adwaita_icons/adwaita_icons.dart';
 
-import 'nojava.dart';
+// import 'nojava.dart';
 import 'package:adwaita/adwaita.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,28 +24,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String provider = 'https://12ft.io/';
   int? _value = 0;
-  List<String> _historico = [];
-  Map<String, String> _titulos = {};
+  List<String> history = [];
+  Map<String, String> tittles = {};
   final TextEditingController urlController = TextEditingController();
   final focusNode = FocusNode();
   int valor = 0;
   String? previousText = '';
 
-  void _adicionarHistorico(String texto) {
+  void addHistory(String texto) {
     setState(() {
-      _historico.insert(0, texto);
+      history.insert(0, texto);
     });
   }
 
-  void _removerHistorico(int index) {
+  void _removeHistorico(int index) {
     setState(() {
-      _historico.removeAt(index);
+      history.removeAt(index);
     });
   }
 
   Future<String> getTitle(String url) async {
-    if (_titulos.containsKey(url)) {
-      return _titulos[url]!;
+    if (tittles.containsKey(url)) {
+      return tittles[url]!;
     }
     String title = '';
     try {
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         final response = await http.get(Uri.parse(url));
         final document = parse(utf8.decode(response.bodyBytes));
         title = document.querySelector('title')!.text;
-        _titulos[url] = title;
+        tittles[url] = title;
       }
     } catch (e) {
       debugPrint('Error getting title: $e');
@@ -250,10 +250,12 @@ class _HomePageState extends State<HomePage> {
                       focusNode: focusNode,
                       decoration: InputDecoration(
                         hintMaxLines: 1,
-                        prefixIconConstraints: const BoxConstraints(
-                          minWidth: 20,
-                          minHeight: 20,
-                        ),
+                        prefixIconConstraints: Platform.isLinux
+                            ? const BoxConstraints(
+                                minWidth: 20,
+                                minHeight: 20,
+                              )
+                            : null,
                         prefixIcon: Platform.isLinux
                             ? const Padding(
                                 padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -283,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                         //   _pushPageNoJava(context);
                         // } else {
                         _launchURL(context, value, provider);
-                        _adicionarHistorico(value);
+                        addHistory(value);
                         //urlController.clear();
                         // }
                       },
@@ -315,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
 
-                _historico.isEmpty
+                history.isEmpty
                     ? const Text('')
                     : Padding(
                         padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
@@ -328,7 +330,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               ListView.builder(
-                                itemCount: _historico.length,
+                                itemCount: history.length,
                                 // _historico.length > 10
                                 //     ? 10
                                 //     : _historico.length,
@@ -336,10 +338,10 @@ class _HomePageState extends State<HomePage> {
                                 shrinkWrap: true,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ListTile(
-                                    key: ValueKey(_historico[index]),
+                                    key: ValueKey(history[index]),
                                     dense: true,
                                     title: FutureBuilder(
-                                      future: getTitle(_historico[index]),
+                                      future: getTitle(history[index]),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           return Text(
@@ -363,31 +365,31 @@ class _HomePageState extends State<HomePage> {
                                     onTap: () {
                                       _launchURL(
                                         context,
-                                        _historico[index],
+                                        history[index],
                                         provider,
                                       );
                                     },
                                     trailing: Platform.isLinux
                                         ? IconButton(
                                             onPressed: () {},
-                                            icon:
-                                                AdwaitaIcon(AdwaitaIcons.copy),
+                                            icon: const AdwaitaIcon(
+                                                AdwaitaIcons.copy),
                                           )
                                         : IconButton(
                                             onPressed: () {
                                               Share.share(
-                                                  '$provider${_historico[index]}');
+                                                  '$provider${history[index]}');
                                             },
                                             icon: const Icon(Icons.share),
                                           ),
                                     leading: IconButton(
                                       icon: Platform.isLinux
-                                          ? AdwaitaIcon(
+                                          ? const AdwaitaIcon(
                                               AdwaitaIcons.edit_delete)
                                           : const Icon(
                                               Icons.delete_forever_outlined),
                                       onPressed: () {
-                                        _removerHistorico(index);
+                                        _removeHistorico(index);
                                       },
                                     ),
                                   );
