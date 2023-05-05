@@ -5,9 +5,11 @@ Imagine having access to a diverse range of Paywall removal services, all conven
 # Available Services
  - [12ft.io](https://12ft.io/)
  - [archive.is](http://archive.is/)
+ - [removepaywall.com](https://www.removepaywall.com/)
+ - [leiaisso.net](https://www.leiaisso.net/) (brazillian service)
 
 # Coming Soon Services
- - [removepaywall.com](https://www.removepaywall.com/)
+ - You tell me
 
 # New Services Request 
 
