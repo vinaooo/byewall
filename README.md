@@ -1,6 +1,6 @@
 # Byewall
 
-This is an app to agregate Paywall Remover services.
+This is an app to aggregate Paywall Remover services.
 
 # Available Services
  - [12ft.io](https://12ft.io/)
