@@ -1,6 +1,6 @@
 # Byewall
 
-This is an app to aggregate Paywall Remover services.
+Imagine having access to a diverse range of Paywall removal services, all conveniently located in one app. You know the value of quality content, and our app provides a seamless way to access it. No more barriers, no more limits. Try it out now and experience the freedom to explore a world of information and content without any hassle.
 
 # Available Services
  - [12ft.io](https://12ft.io/)
