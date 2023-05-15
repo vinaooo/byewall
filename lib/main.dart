@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         ColorScheme lightColorScheme;
         ColorScheme darkColorScheme;
-
+// asdsdasdasd
         if (lightDynamic != null && darkDynamic != null) {
           // On Android S+ devices, use the provided dynamic color scheme.
           // (Recommended) Harmonize the dynamic color scheme' built-in semantic colors.
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           valueListenable: themeNotifier,
           builder: (_, ThemeMode currentMode, __) {
             return MaterialApp(
-              themeMode: Platform.isLinux ? currentMode : themeMode,
+              themeMode: themeMode,
               theme: Platform.isLinux
                   ? AdwaitaThemeData.light()
                   : ThemeData(
