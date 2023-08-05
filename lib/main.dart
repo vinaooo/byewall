@@ -56,34 +56,58 @@ class _MyAppState extends State<MyApp> {
             brightness: Brightness.dark,
           );
         }
-
-        return ValueListenableBuilder<ThemeMode>(
-          valueListenable: themeNotifier,
-          builder: (_, ThemeMode currentMode, __) {
-            return MaterialApp(
-              themeMode: themeMode,
-              theme: Platform.isLinux
-                  ? AdwaitaThemeData.light()
-                  : ThemeData(
-                      colorScheme: lightDynamic ??
-                          Theme.of(context)
-                              .colorScheme
-                              .copyWith(brightness: Brightness.light),
-                      useMaterial3: true,
-                    ),
-              darkTheme: Platform.isLinux
-                  ? AdwaitaThemeData.dark()
-                  : ThemeData(
-                      colorScheme: darkDynamic ??
-                          Theme.of(context)
-                              .colorScheme
-                              .copyWith(brightness: Brightness.dark),
-                      useMaterial3: true,
-                    ),
-              home: HomePage(themeNotifier: themeNotifier),
-            );
-          },
-        );
+        if (Platform.isLinux) {
+          return ValueListenableBuilder<ThemeMode>(
+            valueListenable: themeNotifier,
+            builder: (_, ThemeMode currentMode, __) {
+              return MaterialApp(
+                themeMode: themeMode,
+                theme: Platform.isLinux
+                    ? AdwaitaThemeData.light()
+                    : ThemeData(
+                        colorScheme: lightDynamic ??
+                            Theme.of(context)
+                                .colorScheme
+                                .copyWith(brightness: Brightness.light),
+                        useMaterial3: true,
+                      ),
+                darkTheme: Platform.isLinux
+                    ? AdwaitaThemeData.dark()
+                    : ThemeData(
+                        colorScheme: darkDynamic ??
+                            Theme.of(context)
+                                .colorScheme
+                                .copyWith(brightness: Brightness.dark),
+                        useMaterial3: true,
+                      ),
+                home: HomePage(themeNotifier: themeNotifier),
+              );
+            },
+          );
+        } else {
+          return MaterialApp(
+            themeMode: themeMode,
+            theme: Platform.isLinux
+                ? AdwaitaThemeData.light()
+                : ThemeData(
+                    colorScheme: lightDynamic ??
+                        Theme.of(context)
+                            .colorScheme
+                            .copyWith(brightness: Brightness.light),
+                    useMaterial3: true,
+                  ),
+            darkTheme: Platform.isLinux
+                ? AdwaitaThemeData.dark()
+                : ThemeData(
+                    colorScheme: darkDynamic ??
+                        Theme.of(context)
+                            .colorScheme
+                            .copyWith(brightness: Brightness.dark),
+                    useMaterial3: true,
+                  ),
+            home: HomePage(themeNotifier: themeNotifier),
+          );
+        }
       },
     );
   }

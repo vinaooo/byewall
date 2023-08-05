@@ -9,9 +9,14 @@ import 'package:share_plus/share_plus.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:adwaita_icons/adwaita_icons.dart';
-// sdfsdf
-// import 'nojava.dart';
 import 'package:adwaita/adwaita.dart';
+
+import 'widgets/servicesLine.dart';
+import 'options/donations.dart';
+import 'functions.dart';
+import 'widgest/text.dart';
+import 'widgets/supportCard.dart';
+import 'widgets/choicechips.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.themeNotifier}) : super(key: key);
@@ -22,12 +27,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String provider = 'https://12ft.io/';
-  int? _value = 0;
   List<String> history = [];
   Map<String, String> tittles = {};
   final TextEditingController urlController = TextEditingController();
-  final focusNode = FocusNode();
+  //final focusNode = FocusNode();
   int valor = 0;
   String? previousText = '';
 
@@ -64,69 +67,51 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    urlController.addListener(onUrlChange);
+    urlController.addListener(
+        () => onUrlChange(urlController, previousText /*, focusNode*/));
   }
 
   @override
   void dispose() {
     urlController.dispose();
-    focusNode.dispose();
+    //focusNode.dispose();
     super.dispose();
   }
-
-  void onUrlChange() {
-    final text = urlController.text;
-    final isPasted = text.length - previousText!.length > 1;
-    if (isPasted) {
-      focusNode.requestFocus();
-      urlController.selection = TextSelection.fromPosition(
-        const TextPosition(offset: 0),
-      );
-    }
-    previousText = text;
-  }
-
-  // void _pushPageNoJava(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const PageNoJava()),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Platform.isLinux
+      appBar: Platform.isLinux || Platform.isMacOS || Platform.isWindows
           ? null
           : AppBar(
               title: const Text('ByeWall'),
               centerTitle: true,
             ),
-      bottomNavigationBar: BottomAppBar(
-        height: 100,
-        child: Platform.isLinux
-            ? const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 400,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      child: Text(
-                          'Support indie devs, prioritize info access over big corps. Help me fund Xbox Gamepass for my kids :-P. \nThanks!',
-                          style: TextStyle()),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(onPressed: null, child: Text('Donate')),
-                    ],
-                  ),
-                ],
-              )
-            : const Text(''),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   height: 120,
+      //   child: Platform.isLinux || Platform.isMacOS || Platform.isWindows
+      //       ? const Column(
+      //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //           children: [
+      //             SizedBox(
+      //               width: 400,
+      //               child: Padding(
+      //                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+      //                 child: Text(
+      //                     'Support indie devs, prioritize info access over big corps. Help me fund Xbox Gamepass for my kids :-P. \nThanks!',
+      //                     style: TextStyle()),
+      //               ),
+      //             ),
+      //             Row(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: [
+      //                 ElevatedButton(onPressed: null, child: Text('Donate')),
+      //               ],
+      //             ),
+      //           ],
+      //         )
+      //       : const Text(''),
+      // ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,195 +123,64 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        'Services:',
-                        style: Platform.isLinux
-                            ? Theme.of(context).textTheme.headlineMedium
-                            : const TextStyle(
-                                fontSize: 16,
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
+                Services(),
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Row(
-                          children: [
-                            Wrap(
-                              spacing: 5.0,
-                              children: List<Widget>.generate(
-                                4,
-                                // 5,
-                                (int index) {
-                                  String label = '';
-                                  switch (index) {
-                                    case 0:
-                                      label = '12ft.io';
-                                      break;
-                                    case 1:
-                                      label = 'Archive.is';
-                                      break;
-                                    case 2:
-                                      label = 'RemovePaywall.com';
-                                      break;
-                                    case 3:
-                                      label = 'LeiaIsso.net';
-                                      break;
-                                    // case 4:
-                                    //   label = 'noJS';
-                                    //   break;
-                                  }
-                                  return ChoiceChip(
-                                    padding: const EdgeInsets.all(0.0),
-                                    shape: Platform.isLinux
-                                        ? RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                          )
-                                        : RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                    label: Text(label),
-                                    selected: _value == index,
-                                    onSelected: (bool selected) {
-                                      setState(
-                                        () {
-                                          _value = selected ? index : null;
-                                          if (selected) {
-                                            // execute ação com base na opção selecionada
-                                            if (_value == 0) {
-                                              provider = 'https://12ft.io/';
-                                            } else if (_value == 1) {
-                                              provider =
-                                                  'http://archive.is/newest/';
-                                            } else if (_value == 2) {
-                                              provider =
-                                                  'http://Removepaywall.com/';
-                                            } else if (_value == 3) {
-                                              provider =
-                                                  'https://www.leiaisso.net/';
-                                              // } else if (_value == 4) {
-                                              //   //nojs
-                                              //   valor = _value!;
-                                            }
-                                          }
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                              ).toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
+                ChoicesChips(),
                 const SizedBox(
-                  height: 20,
+                  height: 8,
                 ),
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      autofocus: false,
+                    child: CustomTextField(
                       controller: urlController,
-                      focusNode: focusNode,
-                      decoration: InputDecoration(
-                        hintMaxLines: 1,
-                        prefixIconConstraints: Platform.isLinux
-                            ? const BoxConstraints(
-                                minWidth: 20,
-                                minHeight: 20,
-                              )
-                            : null,
-                        prefixIcon: Platform.isLinux
-                            ? const Padding(
-                                padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                child: AdwaitaIcon(
-                                  AdwaitaIcons.emblem_documents,
-                                  color: AdwaitaColors.dark1,
-                                ),
-                              )
-                            : Icon(
-                                Icons.article_outlined,
-                                color: Platform.isLinux ? Colors.grey : null,
-                                size: 26,
-                              ),
-                        contentPadding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                        filled: true,
-                        isDense: true,
-                        hintText: 'Paste your \'Boring\' URL here...',
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                        ),
-                      ),
+                      // focusNode: focusNode,
                       onSubmitted: (value) {
-                        // if (valor == 4) {
-                        //   _pushPageNoJava(context);
-                        // } else {
-                        _launchURL(context, value, provider);
-                        addHistory(value);
-                        //urlController.clear();
-                        // }
+                        _handleUrlSubmission(value);
                       },
                     ),
                   ),
                 ),
-                // Row(
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 8),
-                //       child: ElevatedButton(
-                //           onPressed: () {
-                //             null;
-                //             // shortenUrl(urlController.text);
-                //             // print(urlController.text);
-                //           },
-                //           child: const Row(
-                //             children: [
-                //               Icon(Icons.link),
-                //               SizedBox(width: 10),
-                //               Text('Shorten URL'),
-                //             ],
-                //           )),
-                //     ),
-                //   ],
-                // ),
-
                 const SizedBox(
-                  height: 20,
+                  height: 8,
                 ),
-
-                history.isEmpty
-                    ? const Text('')
-                    : Padding(
-                        padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
-                        child: Card(
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                    child: Column(
+                      children: [
+                        CustomCard(
+                          topValue: 10,
+                          bottomValue: history.isEmpty ? 10 : 0,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DonationsScreen()),
+                            );
+                          },
+                        ),
+                        Card(
+                          margin: EdgeInsets.zero,
                           color: Platform.isLinux ? AdwaitaColors.light3 : null,
                           elevation: 1,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.zero,
+                            topRight: Radius.zero,
+                            bottomLeft: history.isNotEmpty
+                                ? const Radius.circular(10)
+                                : Radius.zero,
+                            bottomRight: history.isNotEmpty
+                                ? const Radius.circular(10)
+                                : Radius.zero,
+                          )
+
+                              // BorderRadius.circular(8),
+                              ),
                           child: Column(
                             children: [
                               ListView.builder(
@@ -340,17 +194,30 @@ class _HomePageState extends State<HomePage> {
                                   return ListTile(
                                     key: ValueKey(history[index]),
                                     dense: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                      topLeft: Radius.zero,
+                                      topRight: Radius.zero,
+                                      bottomLeft: index == history.length - 1
+                                          ? const Radius.circular(10)
+                                          : Radius.zero,
+                                      bottomRight: index == history.length - 1
+                                          ? const Radius.circular(10)
+                                          : Radius.zero,
+                                    )),
                                     title: FutureBuilder(
                                       future: getTitle(history[index]),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           return Text(
-                                            snapshot.data!.length > 50
-                                                ? '${snapshot.data!.substring(0, 40)}...'
-                                                : snapshot.data!,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            // snapshot.data!.length > 50
+                                            //     ? '${snapshot.data!.substring(0, 40)}...'
+                                            //     :
+                                            snapshot.data!,
+                                            // style: const TextStyle(
+                                            //   fontWeight: FontWeight.bold,
+                                            // ),
+                                            maxLines: 1,
                                           );
                                         } else {
                                           return const Text(
@@ -398,13 +265,21 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _handleUrlSubmission(String value) {
+    _launchURL(context, value, provider);
+    addHistory(value);
   }
 
   Future<void> _launchURL(

@@ -1,16 +1,16 @@
-# Byewall
+# byewall2
 
-Imagine having access to a diverse range of Paywall removal services, all conveniently located in one app. You know the value of quality content, and our app provides a seamless way to access it. No more barriers, no more limits. Try it out now and experience the freedom to explore a world of information and content without any hassle.
+A new Flutter project.
 
-# Available Services
- - [12ft.io](https://12ft.io/)
- - [archive.is](http://archive.is/)
- - [removepaywall.com](https://www.removepaywall.com/)
- - [leiaisso.net](https://www.leiaisso.net/) (brazillian service)
+## Getting Started
 
-# Coming Soon Services
- - You tell me
+This project is a starting point for a Flutter application.
 
-# New Services Request 
+A few resources to get you started if this is your first Flutter project:
 
-Please create an issue [here](https://github.com/vinaooo/byewall/issues/new?assignees=&labels=&template=services-request.md&title=Service+request)
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
