@@ -14,7 +14,7 @@ import 'package:adwaita/adwaita.dart';
 import 'widgets/servicesLine.dart';
 import 'options/donations.dart';
 import 'functions.dart';
-import 'widgest/text.dart';
+import 'widgets/text.dart';
 import 'widgets/supportCard.dart';
 import 'widgets/choicechips.dart';
 
