@@ -1,6 +1,5 @@
+import 'package:byewall/globals.dart';
 import 'package:flutter/material.dart';
-
-import '../functions.dart';
 
 class ChoicesChips extends StatefulWidget {
   const ChoicesChips({super.key});
@@ -16,7 +15,7 @@ class _ChoicesChipsState extends State<ChoicesChips> {
   String _getOptionLabel(int index) {
     switch (Options.values[index]) {
       case Options.twelveFtIo:
-        return '1285ft.io';
+        return '12ft.io';
       case Options.archiveIs:
         return 'archive.is';
       case Options.removePaywallCom:
@@ -32,7 +31,11 @@ class _ChoicesChipsState extends State<ChoicesChips> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: const EdgeInsets.only(
+              left: paddingLeft8,
+              top: paddingTop8,
+              right: paddingRight8,
+              bottom: paddingBottom0),
           child: SizedBox(
             height: 30,
             child: ListView.builder(
@@ -40,7 +43,8 @@ class _ChoicesChipsState extends State<ChoicesChips> {
               itemCount: Options.values.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 3, 0),
+                  padding: const EdgeInsets.fromLTRB(
+                      paddingLeft0, paddingTop0, 8, paddingBottom0),
                   child: RawChip(
                     showCheckmark: false,
                     label: Text(

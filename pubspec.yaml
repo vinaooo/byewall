@@ -46,6 +46,7 @@ dependencies:
   webview_flutter_android: ^3.6.2
   adwaita: ^0.5.2
   adwaita_icons: ^0.2.1
+  receive_sharing_intent: ^1.4.5
 
 dev_dependencies:
   flutter_test:
